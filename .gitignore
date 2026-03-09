@@ -1,2 +1,6 @@
 .idea
 
+# Downloaded during install
+dotfiles.symlink/git-completion.bash
+dotfiles.symlink/git-prompt.sh
+

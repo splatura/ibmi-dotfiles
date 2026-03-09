@@ -15,45 +15,48 @@ for your user. **These dotfiles are installed in your home directory
 and will not effect anyone else on the system.**
 
 ## Requirements
-This software requires that the
-[IBM i Open Source Environment](https://bitbucket.org/ibmi/opensource/src/master/docs/yum/#markdown-header-installation)
-(yum) be installed.
+
+- [IBM i Open Source Environment](https://bitbucket.org/ibmi/opensource/src/master/docs/yum/#markdown-header-installation)
+  (yum) must be installed
+- **bash** shell (the installer will error if run under a different shell)
+- `curl` (for downloading git-completion and git-prompt during install)
+- `git` (if cloning the repo)
 
 ## Installation
 
-### Add SoBored RPM Repo to yum
-Make sure to have `yum-utils` isntalled in order to run `yum-config-manager`:
+### Clone or copy to your home directory
 
-```
-yum install yum-utils
-```
-
-Then:
-
-```
-yum-config-manager --add-repo http://rpms.sobo.red/ibmi/
+```bash
+cd ~
+git clone https://github.com/jbh/ibmi-dotfiles.git ~/.ibmi-dotfiles
 ```
 
-Just to be safe, make sure you clean your metadata:
+Or copy/upload the repo contents to a directory in your home folder.
 
-```
-yum clean metadata
-```
+### Run the installer
 
-### Install `ibmi-dotfiles` via yum
-
-```
-yum install ibmi-dotfiles
+```bash
+~/.ibmi-dotfiles/install.sh
 ```
 
-## Usage
+Or equivalently:
 
-`ibmi-dotfiles` is used from the command line. BASH suggested, as these dotfiles are configured for BASH.
-
-### Copy IBM i Dotfiles to current user's home directory.
-
+```bash
+~/.ibmi-dotfiles/script/bootstrap
 ```
-ibmi-dotfiles
+
+The installer will:
+1. Download `git-completion` and `git-prompt` scripts from GitHub
+2. Copy all dotfiles to your home directory
+3. Prompt you for your git author name and email (for `.gitconfig`)
+
+If files already exist in your home directory, you'll be prompted to skip,
+overwrite, or back them up.
+
+You can also specify a custom install path:
+
+```bash
+~/.ibmi-dotfiles/install.sh --install-path /home/otheruser
 ```
 
 > Be sure to logout and log back in for the dotfiles to take effect. The installed dotfiles
@@ -94,7 +97,7 @@ figure out why.
 
 #### [Git prompt and git bash completion](system/after_dotfiles.symlink)
 
-Installing `ibmi-dotfiles` through yum also installs `git-completion` and `git-prompt`.
+The installer downloads `git-completion` and `git-prompt` from GitHub during setup.
 
 `git-completion` is used to complete git commands, like checkout, on command line.
 For example, while writing `git checkout <branch-name>`, you can tab-complete the branch
@@ -225,16 +228,13 @@ If you want to contribute code, please follow standard forking and pull
 requests. That is, create a fork, make a branch, commit your changes
 to that branch, and submit a PR between this repository and your branch.
 
-## Note for those that used beta versions
+## Migrating from the RPM/yum install
 
-> Please note that the repo URL has changed: `http://rpms.sobo.red/ibmi/`.
-This must be updated in `/QOpenSys/etc/yum/repos.d/sobored.repo`
+If you previously installed `ibmi-dotfiles` via yum, remove it first:
 
-Since I've changed the architecture to noarch, you'll probably have to:
-
-```
-yum clean metadata
+```bash
 yum remove ibmi-dotfiles
-yum install ibmi-dotfiles
 ```
+
+Then follow the [Installation](#installation) instructions above.
 

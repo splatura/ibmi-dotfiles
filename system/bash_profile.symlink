@@ -1,15 +1,16 @@
 # .profile
 # vim:syntax=sh
 
-# Get the good stuff...
-# if running bash
-if [[ -n "$BASH_VERSION" ]] || [[ "$0" == *bash ]] ; then
-    # include .bashrc if it exists
-    if [[ -f "$HOME/.bashrc" ]] ; then
-	. "$HOME/.bashrc"
-    fi
+# Require bash
+if [ -z "$BASH_VERSION" ]; then
+    echo "Error: ibmi-dotfiles requires bash. Please change your shell to bash." >&2
+    return 1 2>/dev/null || exit 1
 fi
 
+# include .bashrc if it exists
+if [[ -f "$HOME/.bashrc" ]] ; then
+    . "$HOME/.bashrc"
+fi
 
 if [[ "$-" == *i* ]]; then
     # Print a shell banner for login shells

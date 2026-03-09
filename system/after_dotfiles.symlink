@@ -1,6 +1,6 @@
 # .after_dotfiles
 # vim:syntax=sh
 
-. /QOpenSys/etc/ibmi-dotfiles/git-completion.bash
-. /QOpenSys/etc/ibmi-dotfiles/git-prompt.sh
+[[ -f "$HOME/.dotfiles/git-completion.bash" ]] && . "$HOME/.dotfiles/git-completion.bash"
+[[ -f "$HOME/.dotfiles/git-prompt.sh" ]] && . "$HOME/.dotfiles/git-prompt.sh"
 

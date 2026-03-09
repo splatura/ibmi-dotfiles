@@ -2,7 +2,13 @@
 #
 # bootstrap installs things.
 
-DOTFILES_ROOT="/QOpenSys/etc/ibmi-dotfiles"
+# Require bash
+if [ -z "$BASH_VERSION" ]; then
+    echo "Error: ibmi-dotfiles requires bash. Please run this script with bash." >&2
+    exit 1
+fi
+
+DOTFILES_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
 set -e
 
@@ -81,7 +87,10 @@ install_dotfiles () {
     backup_all=false
     skip_all=false
 
-    for source in `/QOpenSys/pkgs/bin/find ${DOTFILES_ROOT} -maxdepth 2 -name \*.symlink*`
+    local find_cmd="find"
+    [[ -x /QOpenSys/pkgs/bin/find ]] && find_cmd="/QOpenSys/pkgs/bin/find"
+
+    for source in `$find_cmd ${DOTFILES_ROOT} -maxdepth 2 -name \*.symlink*`
     do
         dest_file=".`basename \"${source%.*}\"`"
         dest="${install_path}/${dest_file}"
@@ -153,6 +162,40 @@ install_dotfiles () {
     done
 }
 
+download_git_scripts () {
+    local curl_cmd
+    if [[ -x /QOpenSys/pkgs/bin/curl ]]; then
+        curl_cmd="/QOpenSys/pkgs/bin/curl"
+    elif command -v curl &>/dev/null; then
+        curl_cmd="curl"
+    else
+        fail "curl is required but not found. Install it with: yum install curl"
+    fi
+
+    local dest_dir="${DOTFILES_ROOT}/dotfiles.symlink"
+    local git_completion_url="https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash"
+    local git_prompt_url="https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh"
+
+    if [[ ! -f "${dest_dir}/git-completion.bash" ]]; then
+        info "downloading git-completion.bash\n"
+        $curl_cmd -fsSL "$git_completion_url" -o "${dest_dir}/git-completion.bash" \
+            && success "downloaded git-completion.bash" \
+            || fail "failed to download git-completion.bash"
+    else
+        success "git-completion.bash already exists, skipping download"
+    fi
+
+    if [[ ! -f "${dest_dir}/git-prompt.sh" ]]; then
+        info "downloading git-prompt.sh\n"
+        $curl_cmd -fsSL "$git_prompt_url" -o "${dest_dir}/git-prompt.sh" \
+            && success "downloaded git-prompt.sh" \
+            || fail "failed to download git-prompt.sh"
+    else
+        success "git-prompt.sh already exists, skipping download"
+    fi
+}
+
+download_git_scripts
 install_dotfiles
 
 echo ''
