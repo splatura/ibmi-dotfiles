@@ -228,6 +228,12 @@ If you want to contribute code, please follow standard forking and pull
 requests. That is, create a fork, make a branch, commit your changes
 to that branch, and submit a PR between this repository and your branch.
 
+## Acknowledgements
+
+This project is built upon the excellent work of [jbh (Yeshua Hall)](https://github.com/jbh)
+and the original [ibmi-dotfiles](https://github.com/jbh/ibmi-dotfiles) project. Thank you
+for creating a solid foundation for IBM i shell configuration.
+
 ## Migrating from the RPM/yum install
 
 If you previously installed `ibmi-dotfiles` via yum, remove it first:
