@@ -28,7 +28,7 @@ and will not effect anyone else on the system.**
 
 ```bash
 cd ~
-git clone https://github.com/jbh/ibmi-dotfiles.git ~/.ibmi-dotfiles
+git clone https://github.com/splatura/ibmi-dotfiles.git ~/.ibmi-dotfiles
 ```
 
 Or copy/upload the repo contents to a directory in your home folder.
@@ -222,7 +222,7 @@ Some features included from `ibmi-dotfiles` are:
 
 Feedback and contributions are welcome. If you find any bugs or think any features
 should be added, please create an
-[issue](https://github.com/jbh/ibmi-dotfiles/issues/new).
+[issue](https://github.com/splatura/ibmi-dotfiles/issues/new).
 
 If you want to contribute code, please follow standard forking and pull
 requests. That is, create a fork, make a branch, commit your changes
