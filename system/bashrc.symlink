@@ -1,8 +1,8 @@
 # .bashrc
 # vim:syntax=sh
 
-# Make vim the default editor
-export EDITOR="vim"
+# Make nano the default editor
+export EDITOR="nano"
 
 # Temporary utility function
 function _source_if_exists {
